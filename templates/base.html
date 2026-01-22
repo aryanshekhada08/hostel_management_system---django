@@ -1,0 +1,72 @@
+{% load static %}
+{% load tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Hostel Management System{% endblock %}</title>
+
+    {% tailwind_css %}
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+<!-- 🔷 NAVBAR -->
+<nav class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <!-- Logo -->
+        <div class="text-xl font-bold tracking-wide">
+            HostelMS
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="space-x-6 text-sm">
+
+            {% if user.is_authenticated %}
+
+                {% if user.role == 'STUDENT' %}
+                    <a href="{% url 'student_dashboard' %}" class="hover:text-yellow-400">
+                        Dashboard
+                    </a>
+                    <a href="{% url 'submit_admission' %}" class="hover:text-yellow-400">
+                        Admission
+                    </a>
+                {% elif user.role == 'WARDEN' %}
+                    <a href="#" class="hover:text-yellow-400">Warden Panel</a>
+                {% elif user.role == 'ADMIN' %}
+                    <a href="/admin/" class="hover:text-yellow-400">Admin Panel</a>
+                {% endif %}
+
+                <span class="text-gray-300">
+                    {{ user.full_name }}
+                </span>
+
+                <a href="{% url 'logout' %}" class="text-red-400 hover:text-red-500">
+                    Logout
+                </a>
+
+            {% else %}
+                <a href="{% url 'student_login' %}" class="hover:text-yellow-400">
+                    Student Login
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+</nav>
+
+<!-- 🔷 MAIN CONTENT -->
+<main class="flex-grow max-w-7xl mx-auto px-4 py-6">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- 🔷 FOOTER -->
+<footer class="bg-white border-t text-center text-gray-500 py-4 text-sm">
+    © {{ now|date:"Y" }} Hostel Management System |
+    Final Year Project
+</footer>
+
+</body>
+</html>
