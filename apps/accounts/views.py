@@ -16,7 +16,7 @@ def student_login(request):
         if user is not None and user.role == 'STUDENT':
             login(request, user)
 
-            # 🔐 FORCE PASSWORD CHANGE
+            # FORCE PASSWORD CHANGE
             if user.must_change_password:
                 return redirect('change_password')
 
