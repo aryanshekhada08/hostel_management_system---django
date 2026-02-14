@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'apps.invoices',
     'apps.complaints',
     'apps.notifications',
+    'apps.rooms',
+    'apps.fees',
 ]
 
 MIDDLEWARE = [
