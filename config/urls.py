@@ -17,14 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import about, home
-app_name = "accounts"
+# app_name = "accounts"
     
 urlpatterns = [
     path('', home, name='home'),
     path('admin/', admin.site.urls),
     path('admissions/', include('apps.admissions.urls')),
     # path('accounts/', include('apps.accounts.urls')),
-    path('accounts/', include(('apps.accounts.urls', 'accounts'), namespace='accounts')),
+    # path('accounts/', include(('apps.accounts.urls', 'accounts'), namespace='accounts')),
+    path(
+        'accounts/',
+        include(('apps.accounts.urls', 'accounts'), namespace='accounts')
+    ),
     path('rooms/', include('apps.rooms.urls')),
     path('__reload__/', include('django_browser_reload.urls')),
     path('fees/', include('apps.fees.urls')),
