@@ -78,12 +78,11 @@ def room_dashboard(request):
 
     allocations = RoomAllocation.objects.select_related("student", "room").all()
 
-    # 🔎 SEARCH LOGIC
+    # 🔎 SEARCH LOGIC (FIXED)
     if search_query:
         allocations = allocations.filter(
             Q(student__email__icontains=search_query) |
-            Q(student__first_name__icontains=search_query) |
-            Q(student__last_name__icontains=search_query)
+            Q(student__full_name__icontains=search_query)
         )
 
     # 🏠 ROOM FILTER
@@ -110,7 +109,6 @@ def room_dashboard(request):
         "search_query": search_query,
         "room_filter": room_filter,
     })
-
 
 # ⚡ 4. AJAX ALLOCATE (Fixed)
 @require_POST

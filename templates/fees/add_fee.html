@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Add Fee{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-12">
+
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-10">
+
+        <h2 class="text-3xl font-bold text-slate-800 mb-8">
+            ➕ Assign New Fee
+        </h2>
+
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-sm font-bold text-slate-600 mb-2">
+                    Select Student
+                </label>
+                <select name="student"
+                        class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500"
+                        required>
+                    <option value="">Choose Student</option>
+                    {% for student in students %}
+                        <option value="{{ student.id }}">
+                            {{ student.full_name }} ({{ student.email }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-slate-600 mb-2">
+                    Fee Amount (₹)
+                </label>
+                <input type="number"
+                       name="amount"
+                       class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500"
+                       placeholder="Enter amount"
+                       required>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-slate-600 mb-2">
+                    Due Date
+                </label>
+                <input type="date"
+                       name="due_date"
+                       class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500"
+                       required>
+            </div>
+
+            <div class="flex justify-between items-center pt-6">
+                <a href="{% url 'fee_dashboard' %}"
+                   class="text-slate-500 hover:text-slate-700 font-semibold">
+                    ← Back
+                </a>
+
+                <button class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold rounded-xl shadow-lg hover:-translate-y-1 transition">
+                    Assign Fee
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

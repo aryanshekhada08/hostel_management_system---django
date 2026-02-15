@@ -1,102 +1,94 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Fee Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
 
-<div class="container py-5">
 
-<h2 class="mb-4 text-center">💰 Fee Management Dashboard</h2>
+{% extends 'base.html' %}
+{% block title %}Fee Management{% endblock %}
 
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success">{{ message }}</div>
-    {% endfor %}
-{% endif %}
+{% block content %}
+<div class="relative min-h-screen py-10">
 
-<div class="card mb-4">
-    <div class="card-body">
-        <h4>Assign Fee</h4>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <form method="POST">
-            {% csrf_token %}
-
-            <div class="row">
-                <div class="col-md-4">
-                    <select name="student" class="form-select" required>
-                        <option value="">Select Student</option>
-                        {% for student in students %}
-                            <option value="{{ student.id }}">
-                                {{ student.email }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md-3">
-                    <input type="number" name="amount"
-                           class="form-control"
-                           placeholder="Amount" required>
-                </div>
-
-                <div class="col-md-3">
-                    <input type="date" name="due_date"
-                           class="form-control" required>
-                </div>
-
-                <div class="col-md-2">
-                    <button class="btn btn-primary">
-                        Assign
-                    </button>
-                </div>
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-10">
+            <div>
+                <h2 class="text-3xl font-extrabold text-slate-800">💰 Fee Management</h2>
+                <p class="text-slate-500 mt-2">Track payments and manage student fees.</p>
             </div>
 
+            <a href="{% url 'add_fee' %}"
+               class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold shadow-lg hover:-translate-y-1 transition-all">
+                + Add Fee
+            </a>
+        </div>
+
+        <!-- Search -->
+        <form method="GET" class="mb-6 flex gap-3">
+            <input type="text" name="search" value="{{ search_query }}"
+                   placeholder="Search by student name or email"
+                   class="px-4 py-3 border rounded-xl w-1/3 focus:ring-2 focus:ring-indigo-500">
+            <button class="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold">
+                Search
+            </button>
         </form>
+
+        <!-- Table -->
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-slate-100 text-slate-600 text-xs uppercase">
+                    <tr>
+                        <th class="p-5">Student</th>
+                        <th class="p-5">Amount</th>
+                        <th class="p-5">Paid</th>
+                        <th class="p-5">Remaining</th>
+                        <th class="p-5">Status</th>
+                        <th class="p-5 text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fee in fees %}
+                    <tr class="border-t hover:bg-slate-50 transition">
+                        <td class="p-5 font-semibold text-slate-700">
+                            {{ fee.student.full_name }}<br>
+                            <span class="text-xs text-slate-400">{{ fee.student.email }}</span>
+                        </td>
+
+                        <td class="p-5 font-mono">₹{{ fee.amount }}</td>
+                        <td class="p-5 font-mono text-emerald-600">₹{{ fee.paid_amount }}</td>
+                        <td class="p-5 font-mono text-slate-600">₹{{ fee.remaining_amount }}</td>
+
+                        <td class="p-5">
+                            {% if fee.status == "Paid" %}
+                                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">Paid</span>
+                            {% elif fee.status == "Partial" %}
+                                <span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-bold">Partial</span>
+                            {% else %}
+                                <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold">Pending</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="p-5 text-right space-x-2">
+                            <a href="{% url 'edit_fee' fee.id %}"
+                               class="px-4 py-2 bg-blue-500 text-white rounded-lg text-xs">
+                                Edit
+                            </a>
+                            <a href="{% url 'delete_fee' fee.id %}"
+                               class="px-4 py-2 bg-red-500 text-white rounded-lg text-xs"
+                               onclick="return confirm('Delete this fee?')">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="p-10 text-center text-slate-400">
+                            No fee records found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
-
-<div class="card">
-    <div class="card-body">
-        <h4>Fee Records</h4>
-
-        <table class="table table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>Student</th>
-                    <th>Total</th>
-                    <th>Paid</th>
-                    <th>Status</th>
-                    <th>Due Date</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for fee in fees %}
-                <tr>
-                    <td>{{ fee.student.email }}</td>
-                    <td>{{ fee.amount }}</td>
-                    <td>{{ fee.paid_amount }}</td>
-                    <td>
-                        {% if fee.status == "Paid" %}
-                            <span class="badge bg-success">Paid</span>
-                        {% elif fee.status == "Partial" %}
-                            <span class="badge bg-warning">Partial</span>
-                        {% else %}
-                            <span class="badge bg-danger">Pending</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ fee.due_date }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-
-        </table>
-    </div>
-</div>
-
-</div>
-
-</body>
-</html>
+{% endblock %}

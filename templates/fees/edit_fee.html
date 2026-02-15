@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Edit Fee{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-12">
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-10">
+
+        <h2 class="text-3xl font-bold text-slate-800 mb-8">
+            ✏ Edit Fee
+        </h2>
+
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-sm font-bold text-slate-600 mb-2">
+                    Paid Amount
+                </label>
+                <input type="number"
+                       name="paid_amount"
+                       value="{{ fee.paid_amount }}"
+                       class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500"
+                       required>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-slate-600 mb-2">
+                    Status
+                </label>
+                <select name="status"
+                        class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    <option value="Pending" {% if fee.status == "Pending" %}selected{% endif %}>Pending</option>
+                    <option value="Partial" {% if fee.status == "Partial" %}selected{% endif %}>Partial</option>
+                    <option value="Paid" {% if fee.status == "Paid" %}selected{% endif %}>Paid</option>
+                </select>
+            </div>
+
+            <div class="flex justify-between items-center pt-6">
+                <a href="{% url 'fee_dashboard' %}"
+                   class="text-slate-500 hover:text-slate-700 font-semibold">
+                    ← Back
+                </a>
+
+                <button class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold rounded-xl shadow-lg hover:-translate-y-1 transition">
+                    Update Fee
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

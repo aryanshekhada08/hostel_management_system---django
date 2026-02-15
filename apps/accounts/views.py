@@ -2,7 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from apps.rooms.models import RoomAllocation
 
+from apps.rooms.models import RoomAllocation
+from apps.fees.models import Fee
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 
 # ===============================
 # STUDENT LOGIN
@@ -38,19 +43,34 @@ def student_login(request):
 # ===============================
 # STUDENT DASHBOARD
 # ===============================
-@login_required
 def student_dashboard(request):
 
-    # Extra protection
     if request.user.role != "STUDENT":
         return redirect("home")
 
-    # Force password change
     if request.user.must_change_password:
         return redirect("accounts:change_password")
 
-    return render(request, "dashboards/student/dashboard.html")
+    # 🏠 Get Room
+    allocation = RoomAllocation.objects.filter(
+        student=request.user
+    ).select_related("room").first()
 
+    room_number = allocation.room.room_number if allocation else None
+
+    # 💰 Get Latest Fee for Student
+    fee = Fee.objects.filter(
+        student=request.user
+    ).order_by("-created_at").first()
+
+    
+
+    context = {
+        "room_number": room_number,
+        "fee": fee,
+    }
+
+    return render(request, "dashboards/student/dashboard.html", context)
 
 # ===============================
 # CHANGE PASSWORD
