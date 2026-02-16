@@ -44,6 +44,9 @@
                 <a href="/contact/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
                     Contact
                 </a>
+                <a href="{% url 'notification_list' %}">
+                    Notifications ({{ request.user.notification_set.filter(is_read=False).count }})
+                 </a>
             </div>
 
             <div class="flex items-center gap-3">

@@ -6,7 +6,8 @@ class Room(models.Model):
     room_number = models.CharField(max_length=10, unique=True)
     capacity = models.IntegerField()
     occupied = models.IntegerField(default=0)
-
+    is_full = models.BooleanField(default=False)
+    
     def __str__(self):
         return f"Room {self.room_number}"
 

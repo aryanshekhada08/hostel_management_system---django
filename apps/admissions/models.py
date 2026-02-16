@@ -19,7 +19,13 @@ class Admission(models.Model):
 
     # Personal details
     dob = models.DateField()
-    gender = models.CharField(max_length=10)
+    GENDER_CHOICES = (
+        ('MALE', 'Male'),
+        ('FEMALE', 'Female'),
+        ('OTHER', 'Other'),
+    )
+
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
 
     # Academic details
     course = models.CharField(max_length=100)

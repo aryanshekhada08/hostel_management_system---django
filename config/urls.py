@@ -35,5 +35,7 @@ urlpatterns = [
 
     path('', home, name='home'),
     path('about/', about, name='about'),
+    path('wallet/', include('apps.wallets.urls')),
+    path('notifications/', include('apps.notifications.urls')),
 ]
 
