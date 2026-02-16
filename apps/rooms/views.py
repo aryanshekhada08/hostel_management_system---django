@@ -183,3 +183,27 @@ def add_room(request):
             messages.error(request, f"Room {room_number} already exists.")
 
     return redirect("room_dashboard")
+
+
+
+
+@login_required
+def student_room_view(request):
+
+    allocation = RoomAllocation.objects.filter(
+    student=request.user
+).select_related('room').first()
+
+    roommates = []
+
+    if allocation:
+        roommates = RoomAllocation.objects.filter(
+            room=allocation.room
+        ).select_related('student').exclude(
+            student=request.user
+        )
+
+    return render(request, "rooms/student_room.html", {
+        "allocation": allocation,
+        "roommates": roommates
+    })

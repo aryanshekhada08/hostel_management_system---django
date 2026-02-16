@@ -19,77 +19,57 @@
 
 <body class="bg-gradient-to-br from-slate-100 via-gray-50 to-slate-200 min-h-screen flex flex-col text-slate-800 relative selection:bg-indigo-500 selection:text-white">
 
-    <nav class="sticky top-4 z-50 mx-4 lg:mx-auto max-w-7xl rounded-2xl backdrop-blur-xl bg-white/80 border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300">
-        <div class="px-6 py-3 flex flex-wrap justify-between items-center">
+ <div class="hidden md:flex items-center gap-1 bg-slate-100/50 p-1 rounded-xl border border-slate-200/50">
 
-            <a href="/" class="flex items-center gap-2 group">
-                <div class="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-lg shadow-lg flex items-center justify-center transform transition-transform group-hover:scale-110 group-hover:rotate-3">
-                    <span class="text-2xl">🏠</span>
-                </div>
-                <div class="text-xl font-extrabold tracking-tight text-slate-800">
-                    Apex<span class="text-indigo-600">Hostel</span>
-                </div>
+    <!-- Public Links -->
+    <a href="/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
+        Home
+    </a>
+
+    <a href="/about/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
+        About
+    </a>
+
+    <a href="/contact/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
+        Contact
+    </a>
+
+    {% if user.is_authenticated %}
+
+        {% if user.is_superuser %}
+            <!-- Admin Links -->
+            <a href="{% url 'admin_wallet_dashboard' %}"
+               class="px-4 py-1.5 text-sm font-semibold text-indigo-600 rounded-lg hover:bg-white hover:shadow-sm transition-all">
+                Wallet Admin
             </a>
 
-            <div class="hidden md:flex items-center gap-1 bg-slate-100/50 p-1 rounded-xl border border-slate-200/50">
-                <a href="/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
-                    Home
-                </a>
-                <a href="/about/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
-                    About
-                </a>
-                <a href="/rooms-list/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
-                    Rooms
-                </a>
-                <a href="/contact/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
-                    Contact
-                </a>
-                <a href="{% url 'notification_list' %}">
-                    Notifications ({{ request.user.notification_set.filter(is_read=False).count }})
-                 </a>
-            </div>
+            <a href="{% url 'room_dashboard' %}"
+               class="px-4 py-1.5 text-sm font-semibold text-indigo-600 rounded-lg hover:bg-white hover:shadow-sm transition-all">
+                Room Panel
+            </a>
 
-            <div class="flex items-center gap-3">
-{% if user.is_authenticated %}
-    
-    <div class="hidden md:block text-right mr-2">
-        <div class="text-[10px] uppercase tracking-wider font-bold text-slate-400">
-            Logged in as
-        </div>
-        <div class="text-sm font-bold text-slate-800 leading-none">
-            {{ user.first_name|default:user.email }}
-        </div>
-    </div>
+        {% else %}
+            <!-- Student Links -->
+            <a href="{% url 'wallet_dashboard' %}"
+               class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
+                My Wallet
+            </a>
 
-    {% if user.is_superuser %}
-        <a href="{% url 'room_dashboard' %}"
-           class="px-4 py-2 bg-indigo-600 text-white rounded-xl font-semibold shadow hover:bg-indigo-500 transition-all">
-            Admin Dashboard
+            <a href="/rooms-list/"
+               class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
+                Rooms
+            </a>
+        {% endif %}
+
+        <!-- Notifications for logged in users only -->
+        <a href="{% url 'notification_list' %}"
+           class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">
+            Notifications ({{ unread_count|default:0 }})
         </a>
-    {% else %}
-        <a href="{% url 'accounts:student_dashboard' %}"
-           class="px-4 py-2 bg-slate-800 text-white rounded-xl font-semibold shadow hover:bg-slate-700 transition-all">
-            Student Dashboard
-        </a>
+
     {% endif %}
 
-    <!-- Logout Button -->
-    <a href="{% url 'accounts:logout' %}"
-       class="px-4 py-2 bg-red-500 text-white rounded-xl font-semibold shadow hover:bg-red-600 transition-all">
-        Logout
-    </a>
-
-{% else %}
-
-    <a href="{% url 'accounts:login' %}"
-       class="px-5 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-bold shadow-lg hover:-translate-y-0.5 transition-all">
-        Login
-    </a>
-
-{% endif %}
-            </div>
-        </div>
-    </nav>
+</div>
 
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 pt-8 pb-12 fade-in relative z-10">
         {% block content %}

@@ -2,58 +2,48 @@
 {% block content %}
 
 <div class="container mt-5">
+    <h2>My Wallet</h2>
 
-    <!-- Balance Card -->
-    <div class="card shadow-lg border-0 mb-4" style="border-radius: 15px;">
+    <div class="card shadow mb-4">
         <div class="card-body text-white"
-             style="background: linear-gradient(135deg, #1e3c72, #2a5298); border-radius: 15px;">
-            
-            <h5 class="card-title">Pocket Money Account</h5>
-            <h2 class="display-5">₹ {{ wallet.balance }}</h2>
-            <p class="mb-0">Available Balance</p>
+             style="background: linear-gradient(135deg, #1e3c72, #2a5298);">
+            <h4>Available Balance</h4>
+            <h2>₹ {{ wallet.balance }}</h2>
         </div>
     </div>
 
-    <!-- Transaction History -->
-    <div class="card shadow-sm">
-        <div class="card-header bg-dark text-white">
-            Transaction History
-        </div>
+    <h4>Transaction History</h4>
 
-        <div class="card-body p-0">
-            <table class="table table-hover mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for t in transactions %}
-                    <tr>
-                        <td>{{ t.created_at|date:"d M Y, H:i" }}</td>
-                        <td>{{ t.description }}</td>
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for t in transactions %}
+            <tr>
+                <td>{{ t.created_at|date:"d M Y H:i" }}</td>
+                <td>{{ t.description }}</td>
 
-                        {% if t.transaction_type == "CREDIT" %}
-                            <td><span class="badge bg-success">Credit</span></td>
-                            <td class="text-success fw-bold">+ ₹{{ t.amount }}</td>
-                        {% else %}
-                            <td><span class="badge bg-danger">Debit</span></td>
-                            <td class="text-danger fw-bold">- ₹{{ t.amount }}</td>
-                        {% endif %}
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="4" class="text-center">No transactions yet.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-
+                {% if t.transaction_type == "CREDIT" %}
+                    <td class="text-success">Credit</td>
+                    <td class="text-success fw-bold">+ ₹{{ t.amount }}</td>
+                {% else %}
+                    <td class="text-danger">Debit</td>
+                    <td class="text-danger fw-bold">- ₹{{ t.amount }}</td>
+                {% endif %}
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4">No transactions yet</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% endblock %}

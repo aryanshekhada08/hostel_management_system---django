@@ -9,5 +9,6 @@ urlpatterns = [
     path('ajax/deallocate/', views.ajax_deallocate_room, name='ajax_deallocate_room'),
     path('add-room/', views.add_room, name='add_room'),
     path('dashboard/', views.room_dashboard, name='room_dashboard'),
+    path('my-room/', views.student_room_view, name='student_room'),
    
 ]

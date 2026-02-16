@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="bg-gradient-to-r from-indigo-700 to-blue-600 text-white py-20">
+    <div class="max-w-6xl mx-auto text-center px-6">
+        <h1 class="text-5xl font-bold mb-4">Contact Us</h1>
+        <p class="text-xl">We’d love to hear from you</p>
+    </div>
+</section>
+
+<section class="py-16 bg-gray-100">
+    <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+
+            <div>
+                <label class="block mb-2 font-semibold">Name</label>
+                <input type="text" name="name" required
+                       class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400">
+            </div>
+
+            <div>
+                <label class="block mb-2 font-semibold">Email</label>
+                <input type="email" name="email" required
+                       class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400">
+            </div>
+
+            <div>
+                <label class="block mb-2 font-semibold">Subject</label>
+                <input type="text" name="subject" required
+                       class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400">
+            </div>
+
+            <div>
+                <label class="block mb-2 font-semibold">Message</label>
+                <textarea name="message" rows="5" required
+                          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400"></textarea>
+            </div>
+
+            <button type="submit"
+                    class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                Send Message
+            </button>
+        </form>
+    </div>
+</section>
+
+<footer class="bg-gray-900 text-white text-center py-6">
+    © 2026 Hostel Management System
+</footer>
+
+{% endblock %}

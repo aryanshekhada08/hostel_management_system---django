@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from apps.notifications.models import Notification
 from apps.rooms.models import RoomAllocation
 
 from apps.rooms.models import RoomAllocation
@@ -9,6 +10,10 @@ from apps.fees.models import Fee
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
+from .models import ContactMessage
 # ===============================
 # STUDENT LOGIN
 # ===============================
@@ -43,6 +48,8 @@ def student_login(request):
 # ===============================
 # STUDENT DASHBOARD
 # ===============================
+
+@login_required
 def student_dashboard(request):
 
     if request.user.role != "STUDENT":
@@ -58,16 +65,21 @@ def student_dashboard(request):
 
     room_number = allocation.room.room_number if allocation else None
 
-    # 💰 Get Latest Fee for Student
+    # 💰 Get Latest Fee
     fee = Fee.objects.filter(
         student=request.user
     ).order_by("-created_at").first()
 
-    
+    # 🔔 Unread Notifications
+    unread_count = Notification.objects.filter(
+        user=request.user,
+        is_read=False
+    ).count()
 
     context = {
         "room_number": room_number,
         "fee": fee,
+        "unread_count": unread_count,
     }
 
     return render(request, "dashboards/student/dashboard.html", context)
@@ -103,3 +115,36 @@ def change_password(request):
 def logout_view(request):
     logout(request)
     return redirect("home")
+
+
+
+
+
+def contact(request):
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+
+        # Save in database
+        ContactMessage.objects.create(
+            name=name,
+            email=email,
+            subject=subject,
+            message=message
+        )
+
+        # Send email to admin
+        send_mail(
+            subject=f"Contact Form: {subject}",
+            message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.EMAIL_HOST_USER],
+            fail_silently=False,
+        )
+
+        messages.success(request, "Your message has been sent successfully!")
+
+    return render(request, "contact.html")

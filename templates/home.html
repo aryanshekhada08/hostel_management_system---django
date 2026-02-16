@@ -1,6 +1,74 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h1>Welcome to Apex Hostel</h1>
-<p>Comfortable and Secure Living for Students.</p>
+
+<!-- HERO SECTION -->
+<section class="bg-gradient-to-r from-blue-800 to-indigo-600 text-white py-20">
+    <div class="max-w-6xl mx-auto text-center px-6">
+        <h1 class="text-5xl font-bold mb-4">
+            Hostel Management System
+        </h1>
+        <p class="text-xl mb-8">
+            Smart • Secure • Modern Hostel Administration
+        </p>
+        <a href="/accounts/login/"
+           class="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-200 transition">
+            Login Now
+        </a>
+    </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="py-16 bg-gray-100">
+    <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-12">
+            Powerful Features
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <!-- Feature 1 -->
+            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                <h3 class="text-xl font-semibold mb-3">Room Allocation</h3>
+                <p class="text-gray-600">
+                    Smart and automated room assignment system for students.
+                </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                <h3 class="text-xl font-semibold mb-3">Wallet System</h3>
+                <p class="text-gray-600">
+                    Admin-controlled pocket money with transaction tracking.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                <h3 class="text-xl font-semibold mb-3">Online Fee Management</h3>
+                <p class="text-gray-600">
+                    Secure fee payments with receipt and invoice generation.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="py-16">
+    <div class="max-w-4xl mx-auto text-center px-6">
+        <h2 class="text-3xl font-bold mb-6">Why Choose Our System?</h2>
+        <p class="text-gray-600 leading-relaxed">
+            Our Hostel Management System simplifies admissions, room allocation,
+            wallet management, fee tracking, complaints handling, and notifications —
+            all in one secure and user-friendly platform.
+        </p>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white text-center py-6">
+    © 2026 Hostel Management System | Developed by Aryan
+</footer>
+
 {% endblock %}

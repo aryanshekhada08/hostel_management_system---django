@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'apps.notifications',
     'apps.rooms',
     'apps.fees',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -160,3 +160,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'aryanshekhada30@gmail.com'
 EMAIL_HOST_PASSWORD = 'mqmf wsvb ntlq cadf'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# DEFAULT_FROM_EMAIL = 'aryanshekhada30@gmail.com'

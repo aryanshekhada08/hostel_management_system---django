@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+from apps.accounts.views import contact
 from .views import about, home
 # app_name = "accounts"
     
@@ -35,6 +37,8 @@ urlpatterns = [
 
     path('', home, name='home'),
     path('about/', about, name='about'),
+    path('contact/', contact, name='contact'),
+    
     path('wallet/', include('apps.wallets.urls')),
     path('notifications/', include('apps.notifications.urls')),
 ]

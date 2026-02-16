@@ -4,7 +4,7 @@ from .utils import send_system_email
 
 
 def credit_wallet(wallet, amount, description="Admin Added Money"):
-
+    print("CREDIT FUNCTION CALLED")
     # Update balance
     wallet.balance += amount
     wallet.save()
@@ -23,7 +23,7 @@ def credit_wallet(wallet, amount, description="Admin Added Money"):
         title="Wallet Credited 💰",
         message=f"₹{amount} has been added to your wallet."
     )
-
+    print("SENDING EMAIL NOW")
     # Send email
     send_system_email(
         subject="Wallet Credited",
