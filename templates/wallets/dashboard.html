@@ -1,49 +1,199 @@
 {% extends "base.html" %}
+{% block title %}My Wallet - Apex Hostel{% endblock %}
+
 {% block content %}
 
-<div class="container mt-5">
-    <h2>My Wallet</h2>
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[10%] left-[5%] w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute top-[20%] right-[10%] w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+</div>
 
-    <div class="card shadow mb-4">
-        <div class="card-body text-white"
-             style="background: linear-gradient(135deg, #1e3c72, #2a5298);">
-            <h4>Available Balance</h4>
-            <h2>₹ {{ wallet.balance }}</h2>
+<div class="max-w-5xl mx-auto px-4 py-8">
+
+    <div class="mb-10 flex flex-col md:flex-row justify-between items-end gap-4">
+        <div>
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">My Wallet</h2>
+            <p class="text-slate-500 mt-1">Manage your pocket money and track expenses.</p>
+        </div>
+        <div class="text-right hidden md:block">
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Current Date</div>
+            <div class="text-sm font-semibold text-slate-700">{% now "l, d F Y" %}</div>
         </div>
     </div>
 
-    <h4>Transaction History</h4>
+    <div class="grid lg:grid-cols-3 gap-8">
+        
+        <div class="lg:col-span-1">
+            <div class="relative w-full aspect-[1.586/1] rounded-2xl overflow-hidden shadow-2xl transition-transform hover:scale-[1.02] duration-300 select-none">
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-800"></div>
+                
+                <div class="relative h-full p-6 flex flex-col justify-between text-white z-10">
+                    <div class="flex justify-between items-center">
+                        <div class="w-11 h-8 bg-gradient-to-br from-yellow-200 via-yellow-400 to-yellow-600 rounded-[4px] border border-yellow-500/50 shadow-sm relative overflow-hidden">
+                            <div class="absolute top-1/2 left-0 w-full h-[1px] bg-black/30"></div>
+                        </div>
+                        <svg class="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path></svg>
+                    </div>
 
-    <table class="table table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for t in transactions %}
-            <tr>
-                <td>{{ t.created_at|date:"d M Y H:i" }}</td>
-                <td>{{ t.description }}</td>
+                    <div class="mt-4">
+                        <div class="text-[10px] text-indigo-300 font-bold uppercase tracking-[0.2em] mb-1">Total Balance</div>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-2xl font-light text-indigo-200">₹</span>
+                            <span class="text-4xl font-mono font-bold tracking-tight text-white drop-shadow-lg truncate">
+                                {{ wallet.balance }}
+                            </span>
+                        </div>
+                    </div>
 
-                {% if t.transaction_type == "CREDIT" %}
-                    <td class="text-success">Credit</td>
-                    <td class="text-success fw-bold">+ ₹{{ t.amount }}</td>
-                {% else %}
-                    <td class="text-danger">Debit</td>
-                    <td class="text-danger fw-bold">- ₹{{ t.amount }}</td>
-                {% endif %}
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="4">No transactions yet</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <div class="flex justify-between items-end mt-4">
+                        <div class="max-w-[70%]">
+                            <div class="text-[9px] text-indigo-300 uppercase tracking-widest mb-0.5">Card Holder</div>
+                            <div class="text-sm font-bold tracking-wider uppercase text-white/90 truncate">
+                                {{ user.fullname|default:user.email|truncatechars:18 }}
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-black italic text-white tracking-tighter opacity-90">Apex</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2">
+            <div class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.05)] border border-white/60 overflow-hidden flex flex-col h-full">
+                
+                <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <h3 class="text-lg font-bold text-slate-800">Recent Activity</h3>
+                    <span id="total-count" class="px-3 py-1 bg-white border border-slate-200 text-slate-500 rounded-full text-xs font-bold">0 Transactions</span>
+                </div>
+
+                <div class="overflow-x-auto flex-grow min-h-[300px]">
+                    <table class="w-full text-left" id="transaction-table">
+                        <thead class="bg-slate-50 text-slate-400 text-xs uppercase tracking-wider font-semibold">
+                            <tr>
+                                <th class="px-6 py-4">Date</th>
+                                <th class="px-6 py-4">Details</th>
+                                <th class="px-6 py-4 text-center">Status</th>
+                                <th class="px-6 py-4 text-right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body" class="divide-y divide-slate-100">
+                            {% for t in transactions %}
+                            <tr class="group hover:bg-blue-50/50 transition-colors duration-150 transaction-row">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-bold text-slate-700">{{ t.created_at|date:"d M" }}</div>
+                                    <div class="text-xs text-slate-400">{{ t.created_at|date:"h:i A" }}</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm font-medium text-slate-600 truncate max-w-[150px] md:max-w-xs">{{ t.description }}</div>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    {% if t.transaction_type == "CREDIT" %}
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                        </div>
+                                    {% else %}
+                                        <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
+                                            <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 text-right whitespace-nowrap">
+                                    {% if t.transaction_type == "CREDIT" %}
+                                        <span class="text-emerald-600 font-bold font-mono text-base">+{{ t.amount }}</span>
+                                    {% else %}
+                                        <span class="text-rose-600 font-bold font-mono text-base">-{{ t.amount }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="px-6 py-12 text-center text-slate-400">No transactions found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="pagination-controls" class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+                    <button id="prev-btn" onclick="changePage(-1)" class="flex items-center gap-1 px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                        Prev
+                    </button>
+                    
+                    <span id="page-info" class="text-xs font-bold text-slate-400 uppercase tracking-wide">Page 1</span>
+                    
+                    <button id="next-btn" onclick="changePage(1)" class="flex items-center gap-1 px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                        Next
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    const rowsPerPage = 5;
+    let currentPage = 1;
+    const rows = document.querySelectorAll('.transaction-row');
+    const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+    // Update Total Count Badge
+    document.getElementById('total-count').innerText = rows.length + " Transactions";
+
+    function showPage(page) {
+        if (rows.length === 0) return;
+
+        // Calculate start and end index
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        // Loop through all rows and hide/show based on index
+        rows.forEach((row, index) => {
+            if (index >= start && index < end) {
+                row.style.display = ''; // Show
+            } else {
+                row.style.display = 'none'; // Hide
+            }
+        });
+
+        // Update Info Text
+        document.getElementById('page-info').innerText = `Page ${page} of ${totalPages}`;
+
+        // Enable/Disable Buttons
+        document.getElementById('prev-btn').disabled = (page === 1);
+        document.getElementById('next-btn').disabled = (page === totalPages);
+    }
+
+    function changePage(direction) {
+        const newPage = currentPage + direction;
+        if (newPage > 0 && newPage <= totalPages) {
+            currentPage = newPage;
+            showPage(currentPage);
+        }
+    }
+
+    // Initialize (Show Page 1)
+    document.addEventListener('DOMContentLoaded', () => {
+        if (rows.length > 0) {
+            showPage(1);
+        } else {
+            // Hide controls if no data
+            document.getElementById('pagination-controls').style.display = 'none';
+        }
+    });
+</script>
+
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 7s infinite; }
+    .animation-delay-2000 { animation-delay: 2s; }
+</style>
 
 {% endblock %}

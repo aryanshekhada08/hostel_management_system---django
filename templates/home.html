@@ -1,74 +1,181 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- HERO SECTION -->
-<section class="bg-gradient-to-r from-blue-800 to-indigo-600 text-white py-20">
-    <div class="max-w-6xl mx-auto text-center px-6">
-        <h1 class="text-5xl font-bold mb-4">
-            Hostel Management System
-        </h1>
-        <p class="text-xl mb-8">
-            Smart • Secure • Modern Hostel Administration
-        </p>
-        <a href="/accounts/login/"
-           class="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-200 transition">
-            Login Now
-        </a>
+<section class="relative pt-20 pb-32 overflow-hidden">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0 pointer-events-none">
+        <div class="absolute top-10 left-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-10 right-10 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-1/3 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
     </div>
-</section>
 
-<!-- FEATURES SECTION -->
-<section class="py-16 bg-gray-100">
-    <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center mb-12">
-            Powerful Features
-        </h2>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-6 animate-fade-in-up">
+            <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+            Live for 2026 Admissions
+        </div>
 
-        <div class="grid md:grid-cols-3 gap-8">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
+            Manage Your Hostel <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">
+                Like a Pro
+            </span>
+        </h1>
 
-            <!-- Feature 1 -->
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-                <h3 class="text-xl font-semibold mb-3">Room Allocation</h3>
-                <p class="text-gray-600">
-                    Smart and automated room assignment system for students.
-                </p>
+        <p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;">
+            Experience smart room allocation, seamless fee payments, and a digital wallet system designed for the modern campus.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style="animation-delay: 0.3s;">
+            <a href="/accounts/login/"
+               class="px-8 py-4 bg-slate-900 text-white rounded-xl font-bold shadow-lg shadow-slate-900/20 hover:bg-slate-800 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+                Login Portal
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+            <a href="/about/"
+               class="px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-xl font-bold hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-200 transition-all flex items-center justify-center gap-2">
+                Learn More
+            </a>
+        </div>
+
+        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-slate-200/60 pt-8 animate-fade-in-up" style="animation-delay: 0.4s;">
+            <div>
+                <div class="text-3xl font-bold text-slate-900">500+</div>
+                <div class="text-sm text-slate-500 font-medium">Happy Students</div>
             </div>
-
-            <!-- Feature 2 -->
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-                <h3 class="text-xl font-semibold mb-3">Wallet System</h3>
-                <p class="text-gray-600">
-                    Admin-controlled pocket money with transaction tracking.
-                </p>
+            <div>
+                <div class="text-3xl font-bold text-slate-900">100%</div>
+                <div class="text-sm text-slate-500 font-medium">Secure Data</div>
             </div>
-
-            <!-- Feature 3 -->
-            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
-                <h3 class="text-xl font-semibold mb-3">Online Fee Management</h3>
-                <p class="text-gray-600">
-                    Secure fee payments with receipt and invoice generation.
-                </p>
+            <div>
+                <div class="text-3xl font-bold text-slate-900">24/7</div>
+                <div class="text-sm text-slate-500 font-medium">Support</div>
             </div>
-
+            <div>
+                <div class="text-3xl font-bold text-slate-900">Zero</div>
+                <div class="text-sm text-slate-500 font-medium">Paperwork</div>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- ABOUT SECTION -->
-<section class="py-16">
-    <div class="max-w-4xl mx-auto text-center px-6">
-        <h2 class="text-3xl font-bold mb-6">Why Choose Our System?</h2>
-        <p class="text-gray-600 leading-relaxed">
-            Our Hostel Management System simplifies admissions, room allocation,
-            wallet management, fee tracking, complaints handling, and notifications —
-            all in one secure and user-friendly platform.
-        </p>
+<section class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Everything You Need</h2>
+            <p class="text-slate-600 max-w-2xl mx-auto">A complete suite of tools to manage hostel operations efficiently.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="group bg-white/60 backdrop-blur-xl p-8 rounded-3xl border border-white/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Smart Room Allocation</h3>
+                <p class="text-slate-500 leading-relaxed">
+                    Automated assignment based on availability and student preferences. View occupancy in real-time.
+                </p>
+            </div>
+
+            <div class="group bg-white/60 backdrop-blur-xl p-8 rounded-3xl border border-white/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Digital Wallet</h3>
+                <p class="text-slate-500 leading-relaxed">
+                    Secure pocket money management. Parents can deposit, and students can track expenses seamlessly.
+                </p>
+            </div>
+
+            <div class="group bg-white/60 backdrop-blur-xl p-8 rounded-3xl border border-white/50 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-emerald-500/10 hover:-translate-y-2 transition-all duration-300">
+                <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Online Fee Payments</h3>
+                <p class="text-slate-500 leading-relaxed">
+                    Hassle-free fee collection with instant receipts. Track dues and payment history in one click.
+                </p>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="bg-gray-900 text-white text-center py-6">
-    © 2026 Hostel Management System | Developed by Aryan
-</footer>
+<section class="py-20 bg-slate-50 relative overflow-hidden mb-12 rounded-3xl mx-4">
+    <div class="absolute right-0 top-0 w-1/3 h-full bg-slate-100 skew-x-12 opacity-50"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-1/2">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
+                Why Choose <br>
+                <span class="text-indigo-600">Apex Hostel System?</span>
+            </h2>
+            <p class="text-slate-600 text-lg mb-8 leading-relaxed">
+                We bridge the gap between students, parents, and wardens. Our platform is designed to reduce administrative workload by 60% while ensuring transparency and security.
+            </p>
+            <ul class="space-y-4">
+                <li class="flex items-center gap-3 text-slate-700 font-medium">
+                    <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm">✓</span>
+                    Instant Room Booking
+                </li>
+                <li class="flex items-center gap-3 text-slate-700 font-medium">
+                    <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm">✓</span>
+                    Parental Monitoring Dashboard
+                </li>
+                <li class="flex items-center gap-3 text-slate-700 font-medium">
+                    <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm">✓</span>
+                    Automated Complaint Resolution
+                </li>
+            </ul>
+        </div>
+        
+        <div class="md:w-1/2 relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl transform rotate-3 blur opacity-30"></div>
+            <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 relative">
+                <div class="flex items-center gap-4 mb-6 border-b border-slate-100 pb-4">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-2xl">👤</div>
+                    <div>
+                        <div class="font-bold text-slate-900">Aryan Shekhada</div>
+                        <div class="text-sm text-slate-500">Hostel Admin</div>
+                    </div>
+                    <div class="ml-auto text-green-500 text-sm font-bold">● Active</div>
+                </div>
+                <div class="space-y-3">
+                    <div class="h-2 bg-slate-100 rounded w-3/4"></div>
+                    <div class="h-2 bg-slate-100 rounded w-1/2"></div>
+                    <div class="h-2 bg-slate-100 rounded w-5/6"></div>
+                </div>
+                <div class="mt-6 flex gap-3">
+                    <div class="flex-1 py-2 bg-indigo-600 rounded-lg opacity-90"></div>
+                    <div class="flex-1 py-2 bg-slate-100 rounded-lg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    @keyframes fadeInUp {
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
 
 {% endblock %}

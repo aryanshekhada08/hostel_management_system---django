@@ -1,91 +1,124 @@
 {% extends "base.html" %}
+{% block title %}About Us - Apex Hostel{% endblock %}
+
 {% block content %}
 
-<!-- HERO -->
-<section class="bg-gradient-to-r from-indigo-700 to-blue-600 text-white py-20">
-    <div class="max-w-6xl mx-auto text-center px-6">
-        <h1 class="text-5xl font-bold mb-4">About Our Hostel Management System</h1>
-        <p class="text-xl">Building Smart & Secure Hostel Administration</p>
-    </div>
-</section>
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[-10%] left-[20%] w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute top-[20%] right-[10%] w-96 h-96 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+    <div class="absolute bottom-[-10%] left-[10%] w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+</div>
 
-<!-- ABOUT SYSTEM -->
-<section class="py-16 bg-gray-100">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-bold mb-6">Who We Are</h2>
-        <p class="text-gray-600 leading-relaxed">
-            Our Hostel Management System is a modern web-based platform designed to simplify
-            hostel operations including admissions, room allocation, fee management,
-            wallet control, notifications, and complaints handling.
-            It provides a secure and organized way to manage students and hostel resources.
+<section class="relative pt-16 pb-20 text-center">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-6">
+            Since 2026
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
+            Redefining <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Hostel Living</span>
+        </h1>
+        <p class="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+            Apex Hostel Management System is a next-generation platform designed to bridge the gap between students, parents, and administration with transparency and security.
         </p>
     </div>
 </section>
 
-<!-- MISSION & VISION -->
-<section class="py-16">
-    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10">
+<section class="py-12">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8">
 
-        <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
-            <h3 class="text-2xl font-semibold mb-4 text-indigo-700">Our Mission</h3>
-            <p class="text-gray-600">
-                To provide a digital solution that makes hostel management efficient,
-                transparent, and easy for administrators and students.
+        <div class="group bg-white/60 backdrop-blur-xl p-10 rounded-3xl border border-white/50 shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-all duration-300">
+            <div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Our Mission</h3>
+            <p class="text-slate-600 leading-relaxed">
+                To eliminate manual paperwork and provide a digital solution that makes hostel management efficient, transparent, and easy for administrators and students alike.
             </p>
         </div>
 
-        <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
-            <h3 class="text-2xl font-semibold mb-4 text-indigo-700">Our Vision</h3>
-            <p class="text-gray-600">
-                To transform traditional hostel management into a smart,
-                automated, and secure system using modern web technologies.
+        <div class="group bg-white/60 backdrop-blur-xl p-10 rounded-3xl border border-white/50 shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-all duration-300">
+            <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 mb-4">Our Vision</h3>
+            <p class="text-slate-600 leading-relaxed">
+                To transform traditional hostel management into a smart, automated, and secure ecosystem using cutting-edge web technologies and real-time data analysis.
             </p>
         </div>
 
     </div>
 </section>
 
-<!-- FEATURES -->
-<section class="py-16 bg-gray-100">
+<section class="py-16">
     <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center mb-12">Key Features</h2>
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-slate-900">Why Apex is Different</h2>
+        </div>
 
-        <div class="grid md:grid-cols-3 gap-8 text-center">
-
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h4 class="text-xl font-semibold mb-3">Admission Management</h4>
-                <p class="text-gray-600">Digital admission workflow with admin approval.</p>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white/40 backdrop-blur-md p-6 rounded-2xl border border-white/40 hover:bg-white/60 transition-colors">
+                <h4 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <span class="text-emerald-500">✓</span> Admission Workflow
+                </h4>
+                <p class="text-sm text-slate-500">Seamless digital admission process with automated admin approval.</p>
+            </div>
+            
+            <div class="bg-white/40 backdrop-blur-md p-6 rounded-2xl border border-white/40 hover:bg-white/60 transition-colors">
+                <h4 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <span class="text-emerald-500">✓</span> Smart Wallet
+                </h4>
+                <p class="text-sm text-slate-500">Secure pocket money management with instant transaction alerts.</p>
             </div>
 
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h4 class="text-xl font-semibold mb-3">Wallet & Transactions</h4>
-                <p class="text-gray-600">Admin-controlled pocket money with email alerts.</p>
+            <div class="bg-white/40 backdrop-blur-md p-6 rounded-2xl border border-white/40 hover:bg-white/60 transition-colors">
+                <h4 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <span class="text-emerald-500">✓</span> Fee Tracking
+                </h4>
+                <p class="text-sm text-slate-500">Real-time fee status updates, invoices, and payment history.</p>
             </div>
-
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h4 class="text-xl font-semibold mb-3">Online Fee Tracking</h4>
-                <p class="text-gray-600">Secure fee payments and invoice generation.</p>
-            </div>
-
         </div>
     </div>
 </section>
 
-<!-- DEVELOPER SECTION -->
 <section class="py-16">
-    <div class="max-w-4xl mx-auto text-center px-6">
-        <h2 class="text-3xl font-bold mb-6">Developed By</h2>
-        <p class="text-gray-600 mb-4">
-            This system is developed as an advanced academic project
-            demonstrating real-world ERP-style architecture using Django & Tailwind CSS.
-        </p>
-        <h3 class="text-xl font-semibold text-indigo-700">Aryan Shekhada</h3>
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-2xl font-bold text-slate-900 mb-8">Meet the Developer</h2>
+        
+        <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 max-w-lg mx-auto transform hover:scale-105 transition-transform duration-300">
+            <div class="w-20 h-20 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-full mx-auto flex items-center justify-center text-3xl shadow-lg mb-4">
+                👨‍💻
+            </div>
+            <h3 class="text-2xl font-bold text-slate-800">Aryan Shekhada</h3>
+            <p class="text-indigo-600 font-medium mb-4">Lead Developer & Architect</p>
+            <p class="text-slate-500 text-sm leading-relaxed">
+                "Apex Hostel Management System was developed as an advanced academic project to demonstrate real-world ERP architecture using Django and Tailwind CSS. My goal is to simplify campus life through technology."
+            </p>
+            
+            <div class="mt-6 flex justify-center gap-4">
+                <span class="px-3 py-1 bg-slate-100 rounded-lg text-xs font-bold text-slate-600">Django 5</span>
+                <span class="px-3 py-1 bg-slate-100 rounded-lg text-xs font-bold text-slate-600">Tailwind CSS</span>
+                <span class="px-3 py-1 bg-slate-100 rounded-lg text-xs font-bold text-slate-600">PostgreSQL</span>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="bg-gray-900 text-white text-center py-6">
-    © 2026 Hostel Management System | All Rights Reserved
-</footer>
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
+</style>
 
 {% endblock %}
