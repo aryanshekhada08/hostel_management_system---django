@@ -1,0 +1,23 @@
+<h2>Complaint Detail</h2>
+
+<p><strong>Student:</strong> {{ complaint.student }}</p>
+<p><strong>Room:</strong> {{ complaint.room_number }}</p>
+<p><strong>Category:</strong> {{ complaint.category }}</p>
+<p><strong>Description:</strong> {{ complaint.description }}</p>
+<p><strong>Status:</strong> {{ complaint.status }}</p>
+
+<hr>
+
+<h3>Update Status</h3>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <select name="status">
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+    </select>
+
+    <button type="submit">Update</button>
+</form>

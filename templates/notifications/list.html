@@ -1,14 +1,183 @@
-<h2>My Notifications</h2>
+{% extends "base.html" %}
+{% block title %}Notifications - Apex Hostel{% endblock %}
 
-{% for n in notifications %}
-    <div>
-        <strong>{{ n.title }}</strong>
-        <p>{{ n.message }}</p>
-        {% if not n.is_read %}
-            <a href="{% url 'mark_as_read' n.id %}">Mark as Read</a>
-        {% endif %}
-        <hr>
+{% block content %}
+
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[10%] right-[20%] w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-[20%] left-[10%] w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+</div>
+
+<div class="max-w-3xl mx-auto px-4 py-8">
+
+    <div class="mb-10 flex items-end justify-between">
+        <div>
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Notifications</h1>
+            <p class="text-slate-500 mt-1">Stay updated with hostel announcements and alerts.</p>
+        </div>
+        
+        <div class="hidden md:block">
+            <span id="total-badge" class="px-3 py-1 bg-white/50 border border-white rounded-full text-xs font-bold text-slate-500 shadow-sm">
+                {{ notifications|length }} Messages
+            </span>
+        </div>
     </div>
-{% empty %}
-    <p>No notifications yet.</p>
-{% endfor %}
+
+    <div id="notification-container" class="space-y-4 min-h-[400px]">
+        
+        {% for n in notifications %}
+            
+            <div class="notification-card relative group overflow-hidden transition-all duration-300 hover:-translate-y-1
+                {% if not n.is_read %}
+                    bg-white/90 backdrop-blur-xl shadow-[0_10px_30px_rgba(79,70,229,0.1)] border-l-4 border-indigo-500 rounded-r-2xl rounded-l-md
+                {% else %}
+                    bg-slate-50/60 backdrop-blur-md border border-slate-200 rounded-2xl opacity-80 hover:opacity-100
+                {% endif %}
+            ">
+                <div class="p-6 flex gap-5">
+                    
+                    <div class="shrink-0">
+                        {% if not n.is_read %}
+                            <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center shadow-inner animate-pulse">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                            </div>
+                        {% else %}
+                            <div class="w-12 h-12 bg-slate-200 text-slate-400 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-bold {% if not n.is_read %}text-slate-800{% else %}text-slate-600{% endif %}">
+                                {{ n.title }}
+                            </h3>
+                            <span class="text-xs font-semibold text-slate-400 whitespace-nowrap ml-2">
+                                {{ n.created_at|timesince }} ago
+                            </span>
+                        </div>
+                        
+                        <p class="mt-1 text-sm leading-relaxed {% if not n.is_read %}text-slate-600{% else %}text-slate-500{% endif %}">
+                            {{ n.message }}
+                        </p>
+
+                        {% if not n.is_read %}
+                            <div class="mt-4 pt-4 border-t border-slate-100/50 flex justify-end">
+                                <a href="{% url 'mark_as_read' n.id %}" 
+                                   class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-600 text-xs font-bold rounded-lg hover:bg-indigo-600 hover:text-white transition-all duration-200 shadow-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Mark as Read
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div> 
+            {% empty %}
+            
+            <div id="empty-state" class="text-center py-20 bg-white/60 backdrop-blur-xl rounded-3xl border border-white/50 shadow-sm">
+                <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800">All caught up!</h3>
+                <p class="text-slate-500 mt-2">You have no new notifications.</p>
+                <a href="/" class="inline-block mt-6 px-6 py-2 bg-white border border-slate-200 text-slate-600 rounded-xl text-sm font-bold hover:bg-slate-50 hover:text-indigo-600 transition-colors">
+                    Back to Home
+                </a>
+            </div>
+
+        {% endfor %}
+    </div>
+
+    <div id="pagination-controls" class="mt-8 flex items-center justify-between px-2" style="display: none;">
+        <button id="prev-btn" onclick="changePage(-1)" 
+            class="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-200 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            Prev
+        </button>
+        
+        <span id="page-info" class="text-xs font-bold text-slate-400 uppercase tracking-wide bg-slate-100 px-3 py-1 rounded-lg">
+            Page 1
+        </span>
+        
+        <button id="next-btn" onclick="changePage(1)" 
+            class="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-200 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+            Next
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+    </div>
+
+</div>
+
+<script>
+    const itemsPerPage = 5; 
+    let currentPage = 1;
+    const items = document.querySelectorAll('.notification-card');
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+
+    // Update Badge
+    const badge = document.getElementById('total-badge');
+    if(badge && items.length > 0) {
+        badge.innerText = items.length + " Messages";
+    }
+
+    function showPage(page) {
+        if (items.length === 0) return;
+
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        items.forEach((item, index) => {
+            if (index >= start && index < end) {
+                item.style.display = 'block';
+                item.classList.add('animate-fade-in');
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        document.getElementById('page-info').innerText = `Page ${page} of ${totalPages}`;
+        document.getElementById('prev-btn').disabled = (page === 1);
+        document.getElementById('next-btn').disabled = (page === totalPages);
+    }
+
+    function changePage(direction) {
+        const newPage = currentPage + direction;
+        if (newPage > 0 && newPage <= totalPages) {
+            currentPage = newPage;
+            showPage(currentPage);
+            document.getElementById('notification-container').scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        if (items.length > 0) {
+            // Only show controls if we have more items than 1 page worth
+            if (totalPages > 1) {
+                document.getElementById('pagination-controls').style.display = 'flex';
+            }
+            showPage(1);
+        } else {
+            // Ensure empty state is visible (handled by Django, but JS safety)
+            document.getElementById('pagination-controls').style.display = 'none';
+        }
+    });
+</script>
+
+<style>
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+    
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 7s infinite; }
+    .animation-delay-2000 { animation-delay: 2s; }
+</style>
+
+{% endblock %}

@@ -1,21 +1,95 @@
-<h2>Add Money to Student Wallet</h2>
+{% extends "base.html" %}
+{% block title %}Add Money - Apex Hostel{% endblock %}
 
-<form method="POST">
-    {% csrf_token %}
+{% block content %}
 
-    <label>Select Student:</label>
-    <select name="user">
-        {% for student in students %}
-            <option value="{{ student.id }}">{{ student.full_name }}</option>
-        {% endfor %}
-    </select>
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[20%] left-[10%] w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-[20%] right-[10%] w-72 h-72 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+</div>
 
-    <br><br>
+<div class="max-w-lg mx-auto px-4 py-16">
 
-    <label>Amount:</label>
-    <input type="number" name="amount" step="0.01" required>
+    <div class="text-center mb-10">
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Add Wallet Balance</h1>
+        <p class="text-slate-500 mt-2">Credit funds to a student's digital wallet securely.</p>
+    </div>
 
-    <br><br>
+    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/60 relative overflow-hidden">
+        
+        <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-emerald-400 to-teal-500"></div>
 
-    <button type="submit">Add Money</button>
-</form>
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Select Student</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    </div>
+                    <select name="user" id="studentSelect" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all appearance-none font-medium text-slate-700 cursor-pointer">
+                        {% for student in students %}
+                            <option value="{{ student.id }}">
+                                {{ student.full_name }} ({{ student.email }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Amount to Add</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <span class="text-emerald-600 font-bold text-lg">₹</span>
+                    </div>
+                    <input type="number" name="amount" step="0.01" required placeholder="0.00"
+                        class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all font-bold text-lg text-slate-800 placeholder-slate-300">
+                </div>
+            </div>
+
+            <button type="submit" 
+                class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                Confirm Transaction
+            </button>
+
+        </form>
+    </div>
+
+    <div class="text-center mt-8">
+        <a href="{% url 'admin_wallet_dashboard' %}" class="text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors">
+            Cancel and go back
+        </a>
+    </div>
+
+</div>
+
+<script>
+    // This script automatically selects the student if you clicked "Add" from the dashboard list
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('user');
+        if (userId) {
+            const select = document.getElementById('studentSelect');
+            select.value = userId;
+        }
+    });
+</script>
+
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 7s infinite; }
+    .animation-delay-2000 { animation-delay: 2s; }
+</style>
+
+{% endblock %}

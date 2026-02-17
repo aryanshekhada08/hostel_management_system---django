@@ -34,6 +34,7 @@ urlpatterns = [
     path('rooms/', include('apps.rooms.urls')),
     path('__reload__/', include('django_browser_reload.urls')),
     path('fees/', include('apps.fees.urls')),
+    path('complaints/', include('apps.complaints.urls')),
 
     path('', home, name='home'),
     path('about/', about, name='about'),

@@ -38,9 +38,11 @@
 
                 {% if user.is_authenticated %}
                     {% if user.is_superuser %}
+                        <a href="/admin" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Dashboard</a>
                         <a href="{% url 'admin_wallet_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Wallet Admin</a>
                         <a href="{% url 'room_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Room Panel</a>
                     {% else %}
+                        <a href="{% url 'accounts:student_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Dashboard</a>
                         <a href="{% url 'wallet_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">My Wallet</a>
                         <a href="{% url 'student_room' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Rooms</a>
                     {% endif %}

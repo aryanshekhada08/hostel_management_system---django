@@ -1,79 +1,176 @@
 {% extends 'dashboards/student/base.html' %}
 
-{% block title %}Student Dashboard{% endblock %}
+{% block title %}Student Dashboard - Apex Hostel{% endblock %}
 
 {% block student_content %}
-<h1 class="text-2xl font-bold mb-6">
-    Welcome, {{ user.full_name }}
-</h1>
-  {% if messages %}
-    {% for message in messages %}
-        <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
-            {{ message }}
+
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[5%] left-[5%] w-64 h-64 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-[10%] right-[10%] w-64 h-64 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+    <div class="absolute top-[20%] right-[30%] w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 py-6">
+
+    <div class="mb-10">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Welcome back, <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">{{ user.full_name|default:user.email }}</span> 👋
+        </h1>
+        <p class="text-slate-500 mt-2 text-lg">Here's an overview of your hostel status.</p>
+    </div>
+
+    {% if messages %}
+        <div class="mb-8 space-y-2">
+            {% for message in messages %}
+                <div class="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-xl shadow-sm animate-fade-in-up">
+                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="font-medium">{{ message }}</span>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-{% endif %}
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-    <!-- 🏠 ROOM NUMBER -->
-    <div class="border rounded-xl p-5">
-        <p class="text-gray-500 text-sm">Room Number</p>
-        <p class="text-xl font-semibold mt-2">
-            {{ room_number|default:"Not Assigned" }}
-        </p>
-    </div>
-
-  <div class="border rounded-xl p-5">
-    <p class="text-gray-500 text-sm">Fee Details</p>
-    <a href="{% url 'student_fee_history' %}" 
-   class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg">
-    View Full Fee History
-</a>
-<a href="{% url 'payment_history' %}"
-   class="mt-4 inline-block px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition">
-    🧾 View Payment History
-</a>
-    {% if fee %}
-        <p class="text-lg font-semibold mt-2">
-            Total: ₹{{ fee.amount }}
-        </p>
-
-        <p class="text-sm text-gray-600">
-            Paid: ₹{{ fee.paid_amount }}
-        </p>
-
-        <p class="text-sm text-gray-600">
-            Remaining: ₹{{ fee.remaining_amount }}
-        </p>
-
-        <p class="mt-2 font-semibold
-            {% if fee.status == 'Paid' %}
-                text-green-500
-            {% elif fee.status == 'Partial' %}
-                text-yellow-500
-            {% else %}
-                text-red-500
-            {% endif %}">
-            Status: {{ fee.status }}
-        </p>
-       {% if fee and fee.status != "Paid" %}
-    <a href="{% url 'pay_fee' fee.id %}"
-       class="mt-3 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-        Pay ₹1000
-    </a>
-{% endif %}
-    {% else %}
-        <p class="text-gray-400 mt-2">No Fee Assigned</p>
     {% endif %}
-</div>
 
-    <!-- 📢 COMPLAINT COUNT -->
-    <div class="border rounded-xl p-5">
-        <p class="text-gray-500 text-sm">Complaints</p>
-        <p class="text-xl font-semibold mt-2">
-            {{ complaints_count }}
-        </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="group relative bg-white/80 backdrop-blur-xl p-6 rounded-3xl border border-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.05)] overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+            
+            <div class="absolute -top-4 -right-4 text-indigo-50 opacity-50 group-hover:scale-110 transition-transform">
+                <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </div>
+            
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center shadow-sm">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-700">Room Number</h3>
+                </div>
+
+                <div class="mt-4">
+                    {% if room_number %}
+                        <p class="text-5xl font-black text-slate-800 tracking-tighter">
+                            {{ room_number }}
+                        </p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">
+                            Allocated
+                        </span>
+                    {% else %}
+                        <p class="text-3xl font-bold text-slate-300">--</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-bold">
+                            Not Assigned
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="md:col-span-1 group relative bg-white/80 backdrop-blur-xl p-6 rounded-3xl border border-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+            
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-sm">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-700">Fee Status</h3>
+                </div>
+                
+                <div class="flex gap-1">
+                    <a href="{% url 'payment_history' %}" title="Payment History" class="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    </a>
+                </div>
+            </div>
+
+            {% if fee %}
+                <div>
+                    <div class="mb-4">
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Remaining Due</p>
+                        <p class="text-3xl font-black text-slate-800">₹{{ fee.remaining_amount }}</p>
+                    </div>
+
+                    <div class="mb-2">
+                        <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
+                            <span>Paid: ₹{{ fee.paid_amount }}</span>
+                            <span>Total: ₹{{ fee.amount }}</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                            <div class="h-full rounded-full transition-all duration-500
+                                {% if fee.status == 'Paid' %}bg-emerald-500{% elif fee.status == 'Partial' %}bg-amber-400{% else %}bg-rose-500{% endif %}"
+                                style="width: {% if fee.amount > 0 %}{% widthratio fee.paid_amount fee.amount 100 %}{% else %}0{% endif %}%">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center mt-3">
+                        <span class="px-2 py-1 rounded-md text-xs font-bold border 
+                            {% if fee.status == 'Paid' %} bg-emerald-50 text-emerald-600 border-emerald-100
+                            {% elif fee.status == 'Partial' %} bg-amber-50 text-amber-600 border-amber-100
+                            {% else %} bg-rose-50 text-rose-600 border-rose-100 {% endif %}">
+                            {{ fee.status }}
+                        </span>
+                        <a href="{% url 'student_fee_history' %}" class="text-xs font-bold text-indigo-600 hover:underline">View Details</a>
+                    </div>
+
+                    {% if fee.status != "Paid" %}
+                        <a href="{% url 'pay_fee' fee.id %}" class="block w-full text-center mt-5 px-4 py-3 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 hover:shadow-indigo-500/30 hover:-translate-y-0.5 transition-all">
+                            Pay Now
+                        </a>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="h-40 flex flex-col items-center justify-center text-center">
+                    <p class="text-slate-400 font-medium">No active fee records.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="group relative bg-white/80 backdrop-blur-xl p-6 rounded-3xl border border-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+            
+            <div class="absolute -top-4 -right-4 text-rose-50 opacity-50 group-hover:scale-110 transition-transform">
+                 <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            </div>
+
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center shadow-sm">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-700">Complaints</h3>
+                </div>
+
+                <div class="mt-4">
+                    <p class="text-5xl font-black text-slate-800 tracking-tighter">
+                        {{ complaints_count|default:"0" }}
+                    </p>
+                    <p class="text-sm font-bold text-slate-400 mt-1 uppercase tracking-wide">Active Tickets</p>
+                </div>
+
+                <div class="mt-8">
+                     <a href="{% url 'submit_complaint' %}" class="inline-flex items-center gap-2 text-sm font-bold text-rose-600 hover:text-rose-800 transition-colors">
+                        <span class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center text-lg leading-none">+</span>
+                        Raise Complaint
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
+
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 7s infinite; }
+    .animation-delay-2000 { animation-delay: 2s; }
+    .animation-delay-4000 { animation-delay: 4s; }
+    
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in-up { animation: fadeInUp 0.5s ease-out forwards; }
+</style>
+
 {% endblock %}
