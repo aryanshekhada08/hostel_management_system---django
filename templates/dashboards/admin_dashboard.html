@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - Apex Hostel{% endblock %}
+
+{% block content %}
+
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[5%] left-[5%] w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-[10%] right-[10%] w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+    <div class="absolute top-[40%] right-[30%] w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 py-8">
+
+    <div class="mb-10">
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Admin Dashboard</h1>
+        <p class="text-slate-500 mt-1">Overview of hostel performance and activities.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+        <div class="group bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-white/60 hover:-translate-y-1 transition-all duration-300">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Students</p>
+                    <h2 class="text-3xl font-black text-slate-800 mt-1">{{ total_students }}</h2>
+                </div>
+                <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="group bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-white/60 hover:-translate-y-1 transition-all duration-300">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pending Issues</p>
+                    <h2 class="text-3xl font-black text-rose-500 mt-1">{{ pending_complaints }}</h2>
+                </div>
+                <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="group bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-white/60 hover:-translate-y-1 transition-all duration-300">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Reports</p>
+                    <h2 class="text-3xl font-black text-slate-700 mt-1">{{ total_complaints }}</h2>
+                </div>
+                <div class="w-12 h-12 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="group bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-white/60 hover:-translate-y-1 transition-all duration-300">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Revenue</p>
+                    <h2 class="text-3xl font-black text-emerald-600 mt-1">₹{{ total_revenue }}</h2>
+                </div>
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white/90 backdrop-blur-xl p-6 md:p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-white/60 mb-8">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-slate-800">Monthly Revenue Analytics</h3>
+            <span class="px-3 py-1 bg-indigo-50 text-indigo-600 text-xs font-bold rounded-full">Year {{ current_year|default:"2026" }}</span>
+        </div>
+        <div class="relative h-80 w-full">
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+
+        <div class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/60 shadow-sm overflow-hidden flex flex-col">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white/50">
+                <h3 class="text-lg font-bold text-slate-800">Recent Complaints</h3>
+                <a href="#" class="text-xs font-bold text-indigo-600 hover:underline">View All</a>
+            </div>
+            
+            <div class="divide-y divide-slate-100">
+                {% for complaint in recent_complaints %}
+                <div class="p-4 hover:bg-slate-50 transition-colors flex items-center justify-between group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shrink-0
+                            {% if complaint.status == 'Pending' %}bg-rose-100 text-rose-600{% else %}bg-emerald-100 text-emerald-600{% endif %}">
+                            {{ complaint.title|slice:":1"|upper }}
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors">{{ complaint.title }}</p>
+                            <p class="text-xs text-slate-400">
+                                Room {{ complaint.room_number }} • {{ complaint.created_at|timesince }} ago
+                            </p>
+                        </div>
+                    </div>
+                    <span class="px-2 py-1 rounded text-[10px] font-bold border uppercase tracking-wide
+                        {% if complaint.status == 'Pending' %}bg-rose-50 text-rose-600 border-rose-100{% else %}bg-emerald-50 text-emerald-600 border-emerald-100{% endif %}">
+                        {{ complaint.status }}
+                    </span>
+                </div>
+                {% empty %}
+                <div class="p-8 text-center text-slate-400 text-sm">No complaints found.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/60 shadow-sm overflow-hidden flex flex-col">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white/50">
+                <h3 class="text-lg font-bold text-slate-800">Recent Payments</h3>
+                <a href="#" class="text-xs font-bold text-indigo-600 hover:underline">View All</a>
+            </div>
+            
+            <div class="divide-y divide-slate-100">
+                {% for payment in recent_payments %}
+                <div class="p-4 hover:bg-slate-50 transition-colors flex items-center justify-between group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm shrink-0">
+                            ₹
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors">{{ payment.student.full_name }}</p>
+                            <p class="text-xs text-slate-400">
+                                {{ payment.payment_date|date:"d M, Y" }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="block font-bold text-emerald-600 text-sm">+ ₹{{ payment.amount }}</span>
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Received</span>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="p-8 text-center text-slate-400 text-sm">No payments found.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+
+    // Gradient for the chart
+    let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(99, 102, 241, 0.4)'); // Indigo
+    gradient.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ months|safe }},
+            datasets: [{
+                label: 'Monthly Revenue (₹)',
+                data: {{ totals|safe }},
+                borderColor: '#6366f1', // Indigo 500
+                backgroundColor: gradient,
+                borderWidth: 3,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#6366f1',
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                tension: 0.4, // Smooth curve
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    titleColor: '#1e293b',
+                    bodyColor: '#475569',
+                    borderColor: '#e2e8f0',
+                    borderWidth: 1,
+                    padding: 10,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return 'Revenue: ₹' + context.parsed.y;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(226, 232, 240, 0.5)', // Slate 200 light
+                        borderDash: [5, 5]
+                    },
+                    ticks: { color: '#94a3b8', font: { weight: 'bold' } }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#64748b', font: { weight: 'bold' } }
+                }
+            }
+        }
+    });
+</script>
+
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 7s infinite; }
+    .animation-delay-2000 { animation-delay: 2s; }
+    .animation-delay-4000 { animation-delay: 4s; }
+</style>
+
+{% endblock %}

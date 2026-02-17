@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="p-8">
+
+    <h2 class="text-2xl font-bold mb-6">Students Management</h2>
+
+    <!-- Search -->
+    <form method="GET" class="mb-4">
+        <input type="text" name="search" placeholder="Search student..."
+               value="{{ search_query }}"
+               class="border p-2 rounded w-64">
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">
+            Search
+        </button>
+    </form>
+
+    <!-- Table -->
+    <div class="bg-white rounded-xl shadow overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-slate-100">
+                <tr>
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Email</th>
+                    <th class="p-3">Room</th>
+                    <th class="p-3">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in page_obj %}
+                <tr class="border-t">
+                    <td class="p-3">{{ student.full_name }}</td>
+                    <td class="p-3">{{ student.email }}</td>
+                    <td class="p-3">{{ student.room_number }}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-1 text-xs bg-green-100 text-green-600 rounded">
+                            Active
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="p-4 text-center text-gray-400">
+                        No students found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6 flex justify-center space-x-2">
+
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}"
+               class="px-3 py-1 bg-gray-200 rounded">
+               Previous
+            </a>
+        {% endif %}
+
+        <span class="px-4 py-1 bg-indigo-600 text-white rounded">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&search={{ search_query }}"
+               class="px-3 py-1 bg-gray-200 rounded">
+               Next
+            </a>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

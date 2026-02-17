@@ -40,6 +40,7 @@ urlpatterns = [
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     
+    path('dashboard/', include('dashboard.urls')),
     path('wallet/', include('apps.wallets.urls')),
     path('notifications/', include('apps.notifications.urls')),
 ]
