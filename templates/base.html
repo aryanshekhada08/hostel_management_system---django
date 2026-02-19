@@ -32,31 +32,33 @@
 
             <div class="hidden md:flex items-center gap-1 bg-slate-100/50 p-1 rounded-xl border border-slate-200/50">
 
-                <a href="/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Home</a>
-                <a href="/about/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">About</a>
-                <a href="/contact/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Contact</a>
+    {% if not user.is_superuser %}
+        <a href="/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Home</a>
+        <a href="/about/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">About</a>
+        <a href="/contact/" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Contact</a>
+    {% endif %}
 
-                {% if user.is_authenticated %}
-                    {% if user.is_superuser %}
-                        <a href="/admin" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Dashboard</a>
-                        <a href="{% url 'admin_wallet_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Wallet Admin</a>
-                        <a href="{% url 'room_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Room Panel</a>
-                    {% else %}
-                        <a href="{% url 'accounts:student_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Dashboard</a>
-                        <a href="{% url 'wallet_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">My Wallet</a>
-                        <a href="{% url 'student_room' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Rooms</a>
-                    {% endif %}
-                    
-                    <a href="{% url 'notification_list' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all flex items-center gap-1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                        {% if unread_count > 0 %}
-                        <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">{{ unread_count }}</span>
-                        {% endif %}
-                    </a>
-                {% endif %}
+    {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+            <a href="/admin" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Dashboard</a>
+            <a href="{% url 'admin_wallet_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Wallet Admin</a>
+            <a href="{% url 'room_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Room Panel</a>
+            <a href="/accounts/admin-financial" class="px-4 py-1.5 text-sm font-semibold text-indigo-700 bg-indigo-50/50 rounded-lg hover:bg-white hover:shadow-sm transition-all">Financial Overview</a>
+        {% else %}
+            <a href="{% url 'accounts:student_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Dashboard</a>
+            <a href="{% url 'wallet_dashboard' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">My Wallet</a>
+            <a href="{% url 'student_room' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all">Rooms</a>
+        {% endif %}
+        
+        <a href="{% url 'notification_list' %}" class="px-4 py-1.5 text-sm font-semibold text-slate-600 rounded-lg hover:bg-white hover:text-indigo-600 hover:shadow-sm transition-all flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+            {% if unread_count > 0 %}
+            <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">{{ unread_count }}</span>
+            {% endif %}
+        </a>
+    {% endif %}
 
-            </div>
-
+</div>
             <div class="flex items-center gap-3">
                 {% if user.is_authenticated %}
                     <div class="hidden md:block text-right mr-2">
