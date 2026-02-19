@@ -79,7 +79,26 @@
 
         </div>
     </nav>
+  
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 pt-8 pb-12 fade-in relative z-10">
+          {% if messages %}
+    <div class="max-w-4xl mx-auto mt-4">
+        {% for message in messages %}
+            <div class="mb-3 p-3 rounded-lg
+                {% if message.tags == 'success' %}
+                    bg-green-100 text-green-700
+                {% elif message.tags == 'error' %}
+                    bg-red-100 text-red-700
+                {% else %}
+                    bg-gray-100 text-gray-700
+                {% endif %}
+            ">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
         {% block content %}
         {% endblock %}
     </main>
@@ -90,8 +109,8 @@
                 © 2026 <span class="text-indigo-600 font-bold">Apex Hostel Management</span>
             </div>
             <div class="mt-2 md:mt-0 flex gap-4">
-                <a href="#" class="hover:text-indigo-600 transition-colors">Privacy Policy</a>
-                <a href="#" class="hover:text-indigo-600 transition-colors">Terms of Service</a>
+                <a href="{% url 'legal' %}" class="hover:text-indigo-600 transition-colors">Privacy Policy</a>
+                <a href="{% url 'legal' %}" class="hover:text-indigo-600 transition-colors">Terms of Service</a>
             </div>
         </div>
     </footer>

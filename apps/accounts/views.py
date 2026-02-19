@@ -13,7 +13,13 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-from .models import ContactMessage
+from .models import ContactMessage, User
+
+
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import PasswordResetOTP
 # ===============================
 # STUDENT LOGIN
 # ===============================
@@ -148,3 +154,101 @@ def contact(request):
         messages.success(request, "Your message has been sent successfully!")
 
     return render(request, "contact.html")
+
+
+def my_profile(request):
+        return render(request, "accounts/my_profile.html", {
+            "user_obj": request.user
+        })
+
+
+
+
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import PasswordResetOTP
+
+
+def forgot_password(request):
+
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        user = User.objects.filter(email=email).first()
+
+        if user:
+            otp = PasswordResetOTP.generate_otp()
+
+            PasswordResetOTP.objects.create(
+                user=user,
+                otp=otp
+            )
+
+            send_mail(
+                "Your Password Reset OTP",
+                f"Your OTP is: {otp}\nValid for 5 minutes.",
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+            )
+
+            request.session["reset_user"] = user.id
+
+        # 🔒 Always show same message
+        messages.success(
+            request,
+            "If this email exists, an OTP has been sent."
+        )
+
+        return redirect("accounts:verify_otp")
+
+    return render(request, "accounts/forgot_password.html")
+
+
+def verify_otp(request):
+
+    user_id = request.session.get("reset_user")
+
+    if not user_id:
+        return redirect("accounts:forgot_password")
+
+    user = User.objects.get(id=user_id)
+
+    if request.method == "POST":
+        entered_otp = request.POST.get("otp")
+
+        otp_obj = PasswordResetOTP.objects.filter(
+            user=user
+        ).last()
+
+        if otp_obj and not otp_obj.is_expired() and otp_obj.otp == entered_otp:
+            request.session["otp_verified"] = True
+            return redirect("accounts:reset_password")
+
+        messages.error(request, "Invalid or expired OTP")
+
+    return render(request, "accounts/verify_otp.html")
+
+from django.contrib.auth.hashers import make_password
+
+def reset_password(request):
+
+    if not request.session.get("otp_verified"):
+        return redirect("accounts:forgot_password")
+
+    user_id = request.session.get("reset_user")
+    user = User.objects.get(id=user_id)
+
+    if request.method == "POST":
+        new_password = request.POST.get("password")
+
+        user.password = make_password(new_password)
+        user.must_change_password = False
+        user.save()
+
+        # Clear session
+        request.session.flush()
+
+        return redirect("accounts:login")
+
+    return render(request, "accounts/reset_password.html")

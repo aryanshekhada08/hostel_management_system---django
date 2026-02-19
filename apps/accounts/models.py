@@ -7,7 +7,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     ROLE_CHOICES = (
         ('ADMIN', 'Admin'),
-        ('WARDEN', 'Warden'),
         ('STUDENT', 'Student'),
     )
 
@@ -38,3 +37,19 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return self.name
+    
+import random
+from django.utils import timezone
+from datetime import timedelta
+
+class PasswordResetOTP(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    otp = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_expired(self):
+        return timezone.now() > self.created_at + timedelta(minutes=5)
+
+    @staticmethod
+    def generate_otp():
+        return str(random.randint(100000, 999999))

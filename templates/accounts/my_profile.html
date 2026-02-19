@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}My Profile - Apex Hostel{% endblock %}
+
+{% block content %}
+
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[15%] right-[10%] w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-[15%] left-[10%] w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+</div>
+
+<div class="max-w-4xl mx-auto py-16 px-6">
+
+    <div class="bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-2xl shadow-indigo-100/50 border border-white/60 overflow-hidden">
+        
+        <div class="p-10 border-b border-slate-100/50 bg-gradient-to-br from-white/40 to-transparent">
+            <div class="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                    <div class="relative w-28 h-28 bg-slate-900 text-white flex items-center justify-center rounded-full text-4xl font-black shadow-2xl border-4 border-white">
+                        {{ user_obj.full_name|first|upper }}
+                    </div>
+                </div>
+
+                <div class="flex-1">
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                        <h1 class="text-4xl font-black text-slate-900 tracking-tight">
+                            {{ user_obj.full_name }}
+                        </h1>
+                        {% if user_obj.role == "ADMIN" %}
+                            <span class="px-3 py-1 text-[10px] font-black bg-indigo-600 text-white rounded-lg uppercase tracking-widest shadow-lg shadow-indigo-200">
+                                Admin
+                            </span>
+                        {% else %}
+                            <span class="px-3 py-1 text-[10px] font-black bg-emerald-500 text-white rounded-lg uppercase tracking-widest shadow-lg shadow-emerald-200">
+                                Student
+                            </span>
+                        {% endif %}
+                    </div>
+                    <p class="text-slate-500 font-medium mt-1 text-lg">
+                        {{ user_obj.email }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-10">
+            <h3 class="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Account Information</h3>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/50 border border-white/80 transition-hover hover:bg-white/80">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-xl">🛡️</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Account Status</p>
+                        <p class="font-black {% if user_obj.is_active %}text-emerald-600{% else %}text-rose-600{% endif %}">
+                            {{ user_obj.is_active|yesno:"Active,Inactive" }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/50 border border-white/80 transition-hover hover:bg-white/80">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-xl">🔑</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Password Security</p>
+                        <p class="font-black {% if user_obj.must_change_password %}text-amber-500{% else %}text-emerald-600{% endif %}">
+                            {% if user_obj.must_change_password %}Update Required{% else %}Secure{% endif %}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/50 border border-white/80 transition-hover hover:bg-white/80">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-xl">📅</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Member Since</p>
+                        <p class="font-black text-slate-800">{{ user_obj.date_joined|date:"d M Y" }}</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/50 border border-white/80 transition-hover hover:bg-white/80">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-xl">💼</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">System Permission</p>
+                        <p class="font-black text-slate-800">{{ user_obj.role }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-12 flex flex-wrap gap-4 pt-8 border-t border-slate-100">
+                <a href="{% url 'accounts:change_password' %}"
+                   class="flex-1 min-w-[200px] flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 text-white rounded-2xl font-black text-sm hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 hover:-translate-y-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                    Update Password
+                </a>
+
+                <a href="{% url 'accounts:logout' %}"
+                   class="px-8 py-4 bg-rose-50 text-rose-600 rounded-2xl font-black text-sm hover:bg-rose-600 hover:text-white transition-all border border-rose-100 hover:border-rose-600">
+                    Sign Out
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 10s infinite; }
+    .animation-delay-2000 { animation-delay: 2s; }
+</style>
+
+{% endblock %}

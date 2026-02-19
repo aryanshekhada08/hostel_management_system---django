@@ -66,6 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Tailwind reload
     'django_browser_reload.middleware.BrowserReloadMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'config.urls'

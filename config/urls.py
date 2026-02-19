@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from apps.accounts.views import contact
-from .views import about, home
+from .views import about, home, legal
 # app_name = "accounts"
     
 urlpatterns = [
@@ -39,6 +39,8 @@ urlpatterns = [
     path('', home, name='home'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
+    path('legal/', legal, name='legal'),
+
     
     path('dashboard/', include('dashboard.urls')),
     path('wallet/', include('apps.wallets.urls')),

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Verify OTP - Apex Hostel{% endblock %}
+
+{% block content %}
+
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[20%] right-[15%] w-72 h-72 bg-amber-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-[20%] left-[15%] w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+</div>
+
+<div class="min-h-[80vh] flex items-center justify-center px-6">
+    <div class="max-w-md w-full">
+        
+        <div class="bg-white/70 backdrop-blur-xl p-10 rounded-[3rem] shadow-2xl shadow-indigo-100/50 border border-white/60">
+            
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-amber-500 text-white flex items-center justify-center rounded-2xl mx-auto mb-6 shadow-lg shadow-amber-200 rotate-6">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Verify Identity</h2>
+                <p class="text-slate-500 font-medium mt-2">We've sent a 6-digit code to your inbox. Enter it below to continue.</p>
+            </div>
+
+            <form method="POST" class="space-y-6">
+                {% csrf_token %}
+                
+                <div class="relative">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4 mb-2 block text-center">One-Time Password</label>
+                    <input type="text" name="otp" required maxlength="6"
+                           class="w-full bg-white/50 border border-slate-200 px-6 py-5 rounded-2xl text-slate-800 text-center text-3xl font-black tracking-[0.5em] placeholder-slate-300 focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all"
+                           placeholder="000000">
+                </div>
+
+                <button type="submit" 
+                        class="w-full bg-slate-900 hover:bg-black text-white font-black py-4 rounded-2xl shadow-xl shadow-slate-200 transition-all hover:-translate-y-1 active:scale-95">
+                    Verify Code
+                </button>
+            </form>
+
+            <div class="mt-8 text-center">
+                <p class="text-sm text-slate-400 font-medium">
+                    Didn't receive the code? 
+                    <button type="button" class="text-indigo-600 font-bold hover:underline ml-1">Resend OTP</button>
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <a href="{% url 'accounts:forgot_password' %}" class="text-xs font-bold text-slate-400 hover:text-slate-600 transition-colors uppercase tracking-widest">
+                Wrong Email? Try again
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(-30px, 40px) scale(1.1); }
+        66% { transform: translate(30px, -20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 8s infinite; }
+    .animation-delay-2000 { animation-delay: 2s; }
+
+    /* Remove arrows from number input if used */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
+{% endblock %}
