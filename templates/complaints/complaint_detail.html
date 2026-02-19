@@ -1,23 +1,104 @@
-<h2>Complaint Detail</h2>
+{% extends "base.html" %}
+{% block title %}Complaint #{{ complaint.id }} - Detail{% endblock %}
 
-<p><strong>Student:</strong> {{ complaint.student }}</p>
-<p><strong>Room:</strong> {{ complaint.room_number }}</p>
-<p><strong>Category:</strong> {{ complaint.category }}</p>
-<p><strong>Description:</strong> {{ complaint.description }}</p>
-<p><strong>Status:</strong> {{ complaint.status }}</p>
+{% block content %}
 
-<hr>
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[20%] right-[10%] w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-[20%] left-[10%] w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+</div>
 
-<h3>Update Status</h3>
+<div class="max-w-4xl mx-auto px-4 py-12">
+    
+    <a href="{% url 'admin_complaints' %}" class="inline-flex items-center text-sm font-bold text-indigo-600 hover:text-indigo-800 mb-6 transition-colors">
+        ← Back to Management
+    </a>
 
-<form method="POST">
-    {% csrf_token %}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <div class="lg:col-span-2 space-y-6">
+            <div class="bg-white/70 backdrop-blur-xl p-8 rounded-[2.5rem] shadow-2xl shadow-indigo-100/50 border border-white/60">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500">Ticket #{{ complaint.id }}</span>
+                        <h2 class="text-3xl font-black text-slate-900 leading-tight mt-1">{{ complaint.title }}</h2>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Category</p>
+                        <p class="text-sm font-black text-slate-700">{{ complaint.category }}</p>
+                    </div>
+                </div>
 
-    <select name="status">
-        <option value="Pending">Pending</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Resolved">Resolved</option>
-    </select>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2">Description</h4>
+                        <div class="bg-slate-50/50 rounded-2xl p-6 border border-slate-100 text-slate-700 leading-relaxed italic">
+                            "{{ complaint.description }}"
+                        </div>
+                    </div>
 
-    <button type="submit">Update</button>
-</form>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-white/50 rounded-2xl border border-white/60">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase">Student</p>
+                            <p class="font-bold text-slate-800">{{ complaint.student.full_name }}</p>
+                        </div>
+                        <div class="p-4 bg-white/50 rounded-2xl border border-white/60">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase">Room Number</p>
+                            <p class="font-bold text-slate-800">{{ complaint.room_number }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-1">
+            <div class="bg-slate-900 text-white p-8 rounded-[2.5rem] shadow-2xl sticky top-8">
+                <h3 class="text-xl font-bold mb-6">Take Action</h3>
+                
+                <div class="mb-8">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Current Status</p>
+                    <div class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest 
+                        {% if complaint.status == 'Pending' %}bg-rose-500/20 text-rose-400 border border-rose-500/30
+                        {% elif complaint.status == 'In Progress' %}bg-blue-500/20 text-blue-400 border border-blue-500/30
+                        {% else %}bg-emerald-500/20 text-emerald-400 border border-emerald-500/30{% endif %}">
+                        {{ complaint.status }}
+                    </div>
+                </div>
+
+                <form method="POST" class="space-y-4">
+                    {% csrf_token %}
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block">Update Progress</label>
+                        <select name="status" class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none appearance-none cursor-pointer">
+                            <option value="Pending" {% if complaint.status == "Pending" %}selected{% endif %}>Pending</option>
+                            <option value="In Progress" {% if complaint.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                            <option value="Resolved" {% if complaint.status == "Resolved" %}selected{% endif %}>Resolved</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-xl shadow-lg shadow-indigo-900/20 transition-all hover:-translate-y-1">
+                        Save Changes
+                    </button>
+                </form>
+
+                <p class="text-[10px] text-slate-500 text-center mt-6 font-medium">
+                    Updating status will notify the student.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(20px, -40px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 8s infinite; }
+    .animation-delay-4000 { animation-delay: 4s; }
+</style>
+
+{% endblock %}

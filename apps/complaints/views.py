@@ -39,18 +39,16 @@ from .models import Complaint
 # Admin Complaint List
 # @login_required
 def admin_complaints(request):
-    if request.user.role != "Admin":
-        return redirect('home')
+   
 
     complaints = Complaint.objects.all().order_by('-created_at')
-    return render(request, 'complaints/admin/admin_complaints.html', {'complaints': complaints})
+    return render(request, 'complaints/admin_complaints.html', {'complaints': complaints})
 
 
 # Admin Complaint Detail
 # @login_required
 def complaint_detail(request, id):
-    if request.user.role != "Admin":
-        return redirect('home')
+    
 
     complaint = get_object_or_404(Complaint, id=id)
 
@@ -60,4 +58,4 @@ def complaint_detail(request, id):
         complaint.save()
         return redirect('admin_complaints')
 
-    return render(request, 'complaints/admin/complaint_detail.html', {'complaint': complaint})
+    return render(request, 'complaints/complaint_detail.html', {'complaint': complaint})

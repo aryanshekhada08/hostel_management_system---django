@@ -1,100 +1,151 @@
-{% extends "admin/index.html" %}
+{% extends "admin/base_site.html" %}
+{% load static %}
 
 {% block content %}
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[10%] left-[10%] w-64 h-64 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+    <div class="absolute bottom-[20%] right-[20%] w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+</div>
+
 <style>
-    .glass-admin-card {
-        background: white;
-        border-radius: 16px;
+    /* Premium Grid Styling */
+    .admin-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    /* Glassmorphism Card Upgrade */
+    .admin-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         padding: 30px;
-        margin-top: 40px;
-        margin-bottom: 20px;
-        /* Modern Soft Shadow */
-        box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); 
-        border: 1px solid #eef2f6;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        align-items: center;
-        max-width: 900px;
-        position: relative;
-        overflow: hidden;
     }
 
-    /* Decorative background accent */
-    .glass-admin-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 6px;
-        height: 100%;
-        background: linear-gradient(to bottom, #4f46e5, #7c3aed);
+    .admin-card:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15);
+        border-color: rgba(79, 70, 229, 0.3);
     }
 
-    .glass-header h2 {
+    .admin-card h3 {
         margin: 0;
-        font-size: 22px;
-        color: #1e293b;
+        font-size: 20px;
         font-weight: 800;
+        color: #1e293b;
         display: flex;
         align-items: center;
         gap: 12px;
     }
 
-    .glass-subtitle {
-        margin: 8px 0 0 0;
-        font-size: 14px;
+    .admin-card p {
         color: #64748b;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-top: 10px;
+        margin-bottom: 20px;
     }
 
-    .glass-btn {
-        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-        color: white !important; /* Override default admin link color */
-        padding: 12px 28px;
+    /* Modern Button Style */
+    .admin-card a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        background: #4f46e5;
+        color: white !important;
         border-radius: 12px;
+        font-weight: 700;
+        font-size: 13px;
         text-decoration: none;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
-        transition: all 0.3s ease;
-        display: inline-block;
+        transition: all 0.2s;
+        width: fit-content;
     }
 
-    .glass-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 30px rgba(79, 70, 229, 0.4);
-        background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+    .admin-card a:hover {
+        background: #4338ca;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        padding-right: 25px;
     }
 
-    /* Mobile Responsive adjustment */
-    @media (max-width: 768px) {
-        .glass-admin-card {
-            flex-direction: column;
-            text-align: center;
-            gap: 20px;
-        }
-        .glass-admin-card::before {
-            width: 100%;
-            height: 6px;
-        }
+    /* Blob Animations */
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(20px, -30px) scale(1.1); }
+        66% { transform: translate(-10px, 10px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 10s infinite; }
+    .animation-delay-2000 { animation-delay: 2s; }
+
+    .header-container {
+        margin-bottom: 40px;
+    }
+    .header-container h1 {
+        font-size: 2.25rem;
+        font-weight: 900;
+        color: #0f172a;
+        letter-spacing: -0.025em;
     }
 </style>
 
-{{ block.super }}
+<div class="header-container">
+    <h1>🏢 Control Center</h1>
+    <p style="color: #64748b; font-weight: 500;">Direct access to the core database management modules.</p>
+</div>
 
-<div class="glass-admin-card">
-    <div class="glass-header">
-        <h2>
-            <span style="font-size: 28px;">🏠</span> 
-            Room Management Portal
-        </h2>
-        <p class="glass-subtitle">
-            Manage student allocations, check room capacity, and handle check-ins.
-        </p>
+<div class="admin-grid">
+
+    <div class="admin-card">
+        <div>
+            <h3><span>👨‍🎓</span> Accounts</h3>
+            <p>Modify user permissions, update student profiles, and manage staff access levels.</p>
+        </div>
+        <a href="/admin/accounts/user/">Manage Users →</a>
     </div>
-    
-    <a href="/rooms/dashboard/" class="glass-btn">
-        Open Dashboard &rarr;
-    </a>
+
+    <div class="admin-card">
+        <div>
+            <h3><span>🛏</span> Rooms</h3>
+            <p>Update room status, manage occupancy limits, and handle student room transfers.</p>
+        </div>
+        <a href="/rooms/dashboard/">Manage Layout →</a>
+    </div>
+
+    <div class="admin-card">
+        <div>
+            <h3><span>⚠</span> Complaints</h3>
+            <p>Review the full history of hostel issues and update resolution logs.</p>
+        </div>
+        <a href="/complaints/admin/">Review Issues →</a>
+    </div>
+
+    <div class="admin-card">
+        <div>
+            <h3><span>💰</span> Fees</h3>
+            <p>Audit payment records, generate invoices, and track outstanding balances.</p>
+        </div>
+        <a href="/fees/dashboard/">Financial Logs →</a>
+    </div>
+
+    <div class="admin-card">
+        <div>
+            <h3><span>💳</span> Wallets</h3>
+            <p>Monitor digital transactions and manage internal student balance credits.</p>
+        </div>
+        <a href="/wallet/admin/dashboard/">Audit Wallets →</a>
+    </div>
+
 </div>
 
 {% endblock %}
