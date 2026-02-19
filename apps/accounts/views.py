@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from apps.complaints.models import Complaint
 from apps.notifications.models import Notification
 from apps.rooms.models import RoomAllocation
 
@@ -76,7 +77,14 @@ def student_dashboard(request):
         student=request.user
     ).order_by("-created_at").first()
 
-    # 🔔 Unread Notifications
+    # 📩 Complaints
+    complaints = Complaint.objects.filter(student=request.user)
+
+    complaints_count = complaints.count()
+    pending_count = complaints.filter(status__icontains="pending").count()
+    resolved_count = complaints.filter(status__icontains="resolved").count()
+
+    # 🔔 Notifications
     unread_count = Notification.objects.filter(
         user=request.user,
         is_read=False
@@ -86,9 +94,13 @@ def student_dashboard(request):
         "room_number": room_number,
         "fee": fee,
         "unread_count": unread_count,
+        "complaints_count": complaints_count,
+        "pending_count": pending_count,
+        "resolved_count": resolved_count,
     }
 
     return render(request, "dashboards/student/dashboard.html", context)
+
 
 # ===============================
 # CHANGE PASSWORD
