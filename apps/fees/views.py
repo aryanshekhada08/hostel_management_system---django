@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.utils import timezone
-
+from decimal import Decimal
 from django.contrib.auth import get_user_model
 from .models import Fee, Payment
 
@@ -31,13 +31,13 @@ def fee_dashboard(request):
         )
 
     # 🔥 Auto Update Status
-    for fee in fees:
-        fee.update_status()
+    # for fee in fees:
+    #     fee.update_status()
 
-    return render(request, "fees/fee_dashboard.html", {
-        "fees": fees,
-        "search_query": search_query,
-    })
+    # return render(request, "fees/fee_dashboard.html", {
+    #     "fees": fees,
+    #     "search_query": search_query,
+    # })
 
 
 # ===========================
@@ -84,7 +84,7 @@ def edit_fee(request, fee_id):
     fee = get_object_or_404(Fee, id=fee_id)
 
     if request.method == "POST":
-        fee.paid_amount = request.POST.get("paid_amount")
+        fee.paid_amount = Decimal(request.POST.get("paid_amount") or 0)
         fee.save()
         fee.update_status()
 
