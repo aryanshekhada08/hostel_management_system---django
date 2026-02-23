@@ -31,13 +31,13 @@ def fee_dashboard(request):
         )
 
     # 🔥 Auto Update Status
-    # for fee in fees:
-    #     fee.update_status()
+    for fee in fees:
+        fee.update_status()
 
-    # return render(request, "fees/fee_dashboard.html", {
-    #     "fees": fees,
-    #     "search_query": search_query,
-    # })
+    return render(request, "fees/fee_dashboard.html", {
+        "fees": fees,
+        "search_query": search_query,
+    })
 
 
 # ===========================
