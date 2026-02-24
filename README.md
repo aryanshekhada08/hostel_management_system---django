@@ -77,4 +77,4 @@ python manage.py test
 
 ## Notes
 - `AUTH_USER_MODEL` is set to a custom user model in `apps.accounts`.
-- Email settings are defined in `config/settings.py`. Replace them with environment variables for production use.
+- Email settings are read from environment variables in `config/settings.py`. Use a `.env` file or your process manager to set them for production.
